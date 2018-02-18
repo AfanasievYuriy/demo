@@ -1,3 +1,5 @@
+package domain;
+
 import java.time.LocalTime;
 
 public class TimePair {
@@ -43,7 +45,7 @@ public class TimePair {
 
     @Override
     public String toString() {
-        return "TimePair{" +
+        return "domain.TimePair{" +
             "action='" + action + '\'' +
             ", time=" + time +
             '}';

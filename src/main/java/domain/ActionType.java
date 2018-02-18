@@ -1,3 +1,5 @@
+package domain;
+
 public enum ActionType {
     IN("вход"),
     OUT("выход");
@@ -11,7 +13,7 @@ public enum ActionType {
         return representation;
     }
 
-    static ActionType parseActionType(String representation) {
+    public static ActionType parseActionType(String representation) {
         return representation.equals(IN.representation) ? IN : OUT;
     }
 }
