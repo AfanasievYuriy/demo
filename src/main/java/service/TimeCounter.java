@@ -11,25 +11,6 @@ import java.util.List;
 
 public class TimeCounter {
 
-    Deque<TimePair> validatePairsList(List<TimePair> allPairsList) {
-        Deque<TimePair> stack = new LinkedList<>();
-
-        stack.push(allPairsList.get(0));
-        for (int i = 1; i < allPairsList.size(); i++) {
-            if (allPairsList.get(i).getAction() == ActionType.OUT
-                && stack.peek().getAction() == ActionType.IN) {
-                stack.push(allPairsList.get(i));
-            }
-            else if (allPairsList.get(i).getAction() == ActionType.IN
-                && stack.peek().getAction() == ActionType.OUT
-                && (i == allPairsList.size() - 1
-                    || allPairsList.get(i + 1).getAction() != ActionType.IN)) {
-                stack.push(allPairsList.get(i));
-            }
-        }
-        return stack;
-    }
-
     public ResultDuration getTimeDuration(List<TimePair> allPairsList) {
         Deque<TimePair> stack = validatePairsList(allPairsList);
         long resultMinutes = 0;
@@ -46,6 +27,31 @@ public class TimeCounter {
         }
 
         return new ResultDuration(LocalTime.MIN.plusMinutes(resultMinutes), withErrors);
+    }
+
+    Deque<TimePair> validatePairsList(List<TimePair> allPairsList) {
+        Deque<TimePair> stack = new LinkedList<>();
+        //todo вынести условие в переменную
+
+        stack.push(allPairsList.get(0));
+        for (int i = 1; i < allPairsList.size(); i++) {
+
+            boolean checkIfNextIn = (i == allPairsList.size() - 1
+                || allPairsList.get(i + 1).getAction() != ActionType.IN);
+            boolean checkIfOutOnStack = stack.peek().getAction() == ActionType.OUT;
+            boolean checkIfInOnStack = stack.peek().getAction() == ActionType.IN;
+
+            if (allPairsList.get(i).getAction() == ActionType.OUT
+                && stack.peek().getAction() == ActionType.IN) {
+                stack.push(allPairsList.get(i));
+            }
+            else if (allPairsList.get(i).getAction() == ActionType.IN
+                && checkIfOutOnStack
+                && checkIfNextIn) {
+                stack.push(allPairsList.get(i));
+            }
+        }
+        return stack;
     }
 
 }
