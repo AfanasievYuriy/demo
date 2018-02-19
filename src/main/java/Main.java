@@ -10,9 +10,26 @@ import service.FileParser;
 import service.TimeCounter;
 
 public class Main {
-    public static final String TEST_FILE_PATH = "src/main/resources/file4.csv";
+    public static final String TEST_FILE_PATH = "src/main/resources/file5.csv";
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
+        Thread.setDefaultUncaughtExceptionHandler(new CustomExceptionHandler());
+        //todo logging if string are wrong or other problems
+        List<TimePair> collect = new FileParser()
+                .parse(Paths.get(TEST_FILE_PATH));
+
+        ResultDuration result = new TimeCounter().getTimeDuration(collect);
+        LocalTime resultDuration = result.getTime();
+        System.out.println(result.isWithError()
+            ? "some data was corrupted. Approximate results are listed bellow"
+            : "data is ok. Correct results are listed bellow");
+        System.out.println("time in a building "
+            + resultDuration.getHour() + "h"
+            + ":" + resultDuration.getMinute() + "min");
+
+    }
+
+    /*public static void main(String[] args) {
         //todo logging if string are wrong or other problems
         List<TimePair> collect = null;
         try {
@@ -45,6 +62,6 @@ public class Main {
             + resultDuration.getHour() + "h"
             + ":" + resultDuration.getMinute() + "min");
 
-    }
+    }*/
 
 }
