@@ -17,8 +17,10 @@ import org.apache.commons.io.FilenameUtils;
 public class ResultsHolder {
     private static final String RESOURCE_DIR_PATH = FilenameUtils
         .separatorsToSystem("src/main/resources/");
-    public static final Pattern fileNamePattern =
-        Pattern.compile("(0?[1-9]|[12][0-9]|3[01])-(0?[1-9]|1[012])-((19|20)\\d\\d)(.csv)*");
+    private static final String pattern =
+        "(0?[1-9]|[12][0-9]|3[01])-(0?[1-9]|1[012])-((19|20)\\d\\d)(.csv)*";
+    public static final Pattern fileNamePattern = Pattern.compile(pattern);
+
     private static ResultsHolder instance;
 
     private Map<String, ResultDuration> resultMap;

@@ -31,7 +31,6 @@ public class TimeCounter {
 
     Deque<TimePair> validatePairsList(List<TimePair> allPairsList) {
         Deque<TimePair> stack = new LinkedList<>();
-        //todo вынести условие в переменную
 
         stack.push(allPairsList.get(0));
         for (int i = 1; i < allPairsList.size(); i++) {
@@ -42,7 +41,7 @@ public class TimeCounter {
             boolean checkIfInOnStack = stack.peek().getAction() == ActionType.IN;
 
             if (allPairsList.get(i).getAction() == ActionType.OUT
-                && stack.peek().getAction() == ActionType.IN) {
+                && checkIfInOnStack) {
                 stack.push(allPairsList.get(i));
             }
             else if (allPairsList.get(i).getAction() == ActionType.IN
