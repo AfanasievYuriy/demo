@@ -6,11 +6,13 @@ import java.nio.file.NoSuchFileException;
 import java.nio.file.Paths;
 import java.time.LocalTime;
 import java.util.List;
+import org.apache.commons.io.FilenameUtils;
 import service.FileParser;
 import service.TimeCounter;
 
 public class Main {
-    public static final String TEST_FILE_PATH = "src/main/resources/file4.csv";
+    public static final String TEST_FILE_PATH = FilenameUtils
+        .separatorsToSystem("src/main/resources/file4.csv");
 
     public static void main(String[] args) {
         List<TimePair> collect = null;
