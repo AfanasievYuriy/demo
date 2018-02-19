@@ -11,7 +11,7 @@ import java.util.List;
 
 public class TimeCounter {
 
-    private Deque<TimePair> getValidPairs(List<TimePair> allPairsList) {
+    Deque<TimePair> validatePairsList(List<TimePair> allPairsList) {
         Deque<TimePair> stack = new LinkedList<>();
 
         stack.push(allPairsList.get(0));
@@ -31,7 +31,7 @@ public class TimeCounter {
     }
 
     public ResultDuration getTimeDuration(List<TimePair> allPairsList) {
-        Deque<TimePair> stack = getValidPairs(allPairsList);
+        Deque<TimePair> stack = validatePairsList(allPairsList);
         long resultMinutes = 0;
         boolean withErrors = false;
 

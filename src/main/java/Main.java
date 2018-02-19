@@ -10,7 +10,7 @@ import service.FileParser;
 import service.TimeCounter;
 
 public class Main {
-    public static final String TEST_FILE_PATH = "src/main/resources/file3.csv";
+    public static final String TEST_FILE_PATH = "src/main/resources/file4.csv";
 
     public static void main(String[] args) {
         //todo logging if string are wrong or other problems
@@ -25,8 +25,10 @@ public class Main {
         catch (IOException e) {
             System.err.println("unable to read file properly");
         }
+        //todo exception handler
         catch (Exception e) {
-            System.err.println("some error occured");
+            System.err.println("some error occured. Maybe file is empty");
+            e.printStackTrace();
         }
 
         if (collect == null) {

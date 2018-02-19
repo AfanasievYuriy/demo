@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.time.LocalTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.regex.Matcher;
@@ -19,23 +20,24 @@ public class FileParser {
 
     public List<TimePair> parse(Path pathToFile) throws IOException {
         Stream<String> stream = Files.lines(pathToFile);
-        List<TimePair> pairsFromFile = getTimePairs(stream);
-        submitBoundaries(pairsFromFile);
+        List<TimePair> pairsFromFile = getValidTimePairs(stream);
+        pairsFromFile = submitBoundaries(pairsFromFile);
 
         return pairsFromFile;
     }
 
-    private void submitBoundaries(List<TimePair> pairs) {
+    List<TimePair> submitBoundaries(List<TimePair> pairs) {
         if (pairs.get(pairs.size() - 1).getAction().equals(ActionType.IN)) {
             pairs.add(new TimePair(ActionType.OUT, LocalTime.MAX));
         }
         if (pairs.get(0).getAction().equals(ActionType.OUT)) {
             pairs.add(0, new TimePair(ActionType.IN, LocalTime.MIN));
         }
+        return new ArrayList<>(pairs);
     }
 
-    private List<TimePair> getTimePairs(Stream<String> stream) {
-        return stream
+    List<TimePair> getValidTimePairs(Stream<String> pairsStream) {
+        return pairsStream
                 .map(s -> {
                     Matcher matcher = fileLinePattern.matcher(s);
                     Optional<TimePair> pair = matcher.find()
